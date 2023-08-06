@@ -1,0 +1,4 @@
+# Rules to accept traffic destined for this host
+chain incoming_connections {
+    tcp dport ssh ip saddr $ssh_allowed_remotes counter goto ssh_policy        # SSH access
+}

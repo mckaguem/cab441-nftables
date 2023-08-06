@@ -1,0 +1,6 @@
+# Rules to accept traffic originating from this host
+chain outgoing_connections {
+    udp dport domain ip daddr $dns_servers counter accept               # DNS server
+    tcp dport $apt_ports ip daddr $apt_servers counter accept           # apt repositories
+
+}

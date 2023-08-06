@@ -1,0 +1,5 @@
+chain bogons {
+    # Ensure that packets from internal addresses come from internal interface and vice-versa
+    iif $wan_facing_interface ip saddr $internal_subnet counter log prefix "[netfilter] Bogon wan iif, internal addr: " counter goto bogons_policy
+    iif $internal_interface ip saddr != $internal_subnet counter log prefix "[netfilter] Bogon lan iif, non-internal addr: " counter goto bogons_policy
+}

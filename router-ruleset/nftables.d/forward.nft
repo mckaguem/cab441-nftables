@@ -1,0 +1,24 @@
+# rules to accept traffic being forwarded
+
+# Rules for ssh connections to/from the internal network
+# tcp dport ssh already applied before this chain is called
+chain ssh_connections {
+
+    #        Client                Server                 
+    # ----------------------------------------------
+    ip saddr 172.0.0.1    ip daddr 172.1.1.11           counter goto ssh_policy   # Example showing 172.0.0.1 access to db
+    
+}
+
+# Rules for anything other than DNS, apt and ssh
+chain general_connections {
+    # Add a rule for www -> db port 3306 (mysql) here
+
+}
+
+chain forwarded_connections {
+    ip daddr $dns_servers udp dport domain counter accept                                # DNS server for everyone
+    ip daddr $apt_servers tcp dport $apt_ports ip saddr $apt_clients counter accept      # apt repositories for allowed clients
+    tcp dport ssh jump ssh_connections                                                   # Note: filter on ssh port before jumping
+    jump general_connections
+}

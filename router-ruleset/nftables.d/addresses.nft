@@ -1,0 +1,24 @@
+# This file configures various information related to this router
+
+# Addresses and interfaces
+define wan_facing_interface = enp0s3                # Interface on the route to the gateway (internet)
+define wan_facing_address = 172.1.100.2             # Address for the above interface
+define internal_interface = enp0s8                  # Interface for the internal network
+define internal_address = 172.1.1.1                 # Address on the internal network
+define internal_subnet = 172.1.1.0/24               # Subnet on the internal network
+define local_subnet = 172.1.0.0/16                  # Subnet containing all local traffic
+
+# Incoming connections 
+define ssh_allowed_remotes = {                      # Remote hosts that are allowed to ssh to this host
+    172.0.99.1 
+}
+
+# External services for outgoing and forwarded connections 
+define dns_servers = { 172.1.0.7 }                 # Allowed DNS servers for all DNS traffic
+define apt_servers = { 151.101.30.132  }                        # Allowed apt repository servers. Check /etc/apt/sources.list
+define apt_ports = { https }                  # Allowed ports for apt repositories. Check /etc/apt/sources.list
+
+# Forwarded connections 
+define apt_clients = {                              # Hosts allowed to access apt_servers
+    172.1.1.11 
+}   

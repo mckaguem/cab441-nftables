@@ -1,0 +1,23 @@
+# How to discard packets in rules
+chain discard_policy {
+    reject                    # ICMP reject and drop
+    # drop                    # just drop
+}
+
+# How to discard packets in base chain policies
+chain base_chain_policy {
+    reject                    # ICMP reject and drop
+    # drop                    # just drop
+}
+
+# What to do with ssh connections to be accepted
+chain ssh_policy {
+    # Here you could log ssh connections in a separate file, for example
+    log prefix "[nftables] ssh: " accept
+}
+
+# What to do with bogons
+chain bogons_policy {
+    # Here would be a good place to have a rule to send the packet to some monitoring system
+    drop
+}
